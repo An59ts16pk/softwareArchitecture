@@ -8,7 +8,8 @@ public class Scene {
     public ArrayList<Flash> flashes;
     public ArrayList<Camera> cameras;
 
-    public Scene(ArrayList<PoligonalModel> models, ArrayList<Flash> flashes, ArrayList<Camera> cameras) {
+    public Scene(int id, ArrayList<PoligonalModel> models, ArrayList<Flash> flashes, ArrayList<Camera> cameras) {
+        this.id = id;
         this.models = models;
         this.flashes = flashes;
         this.cameras = cameras;

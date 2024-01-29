@@ -1,21 +1,20 @@
 package seminar01dz.InMemoryModel;
 
-import ModelElements.PoligonalModel;
-import ModelElements.Flash;
-import ModelElements.Camera;
-import ModelElements.Scene;
+import seminar01dz.ModelElements.PoligonalModel;
+import seminar01dz.ModelElements.Flash;
+import seminar01dz.ModelElements.Camera;
+import seminar01dz.ModelElements.Scene;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ModelStore implements IModelChanger {
-    public List<PoligonalModel> Models;
-    public List<Scene> Scenes;
-    public List<Flash> Flashes;
-    public List<Camera> Cameras;
-    private List<IModelChangeObserver> changeObservers;
+    public ArrayList<PoligonalModel> Models;
+    public ArrayList<Scene> Scenes;
+    public ArrayList<Flash> Flashes;
+    public ArrayList<Camera> Cameras;
+    private ArrayList<IModelChangeObserver> changeObservers;
 
-    public ModelStore(List<IModelChangeObserver> changeObservers) throws Exception {
+    public ModelStore(ArrayList<IModelChangeObserver> changeObservers) throws Exception {
         this.changeObservers = changeObservers;
 
         this.Models = new ArrayList<>();
@@ -31,7 +30,7 @@ public class ModelStore implements IModelChanger {
 
     public Scene getScene(int id) {
         for (int i = 0; i < Scenes.size(); i++) {
-            if (Scenes.get(i).ID == id) {
+            if (Scenes.get(i).id == id) {
                 return Scenes.get(i);
             }
         }
