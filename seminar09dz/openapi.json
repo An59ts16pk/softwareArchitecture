@@ -1,0 +1,431 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Заказ ресурсов в облаке",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost/:8080/api/v1",
+      "description": "Dev server"
+    },
+    {
+      "url": "http://localhost/:8080/api/v123",
+      "description": "Dev server"
+    }
+  ],
+  "paths": {
+    "/clouds": {
+      "get": {
+        "summary": "Метод по получению ресурсов облака",
+        "tags": [
+          "Clouds"
+        ],
+        "operationId": "getAllClouds",
+        "responses": {
+          "200": {
+            "description": "Успешный ответ со списком ресурсов",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Clouds"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Всё остальное",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Создание заказа на облако",
+        "tags": [
+          "Clouds"
+        ],
+        "operationId": "CreateCloud",
+        "requestBody": {
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cloud"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешный ответ со списком ресурсов",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Clouds"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Всё остальное",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clouds/{cloud_id}": {
+      "delete": {
+        "summary": "Отмена заказа",
+        "tags": [
+          "Clouds"
+        ],
+        "operationId": "CancelCloudById",
+        "parameters": [
+          {
+            "name": "cloud_id",
+            "in": "path",
+            "required": true,
+            "description": "Id заказа облака",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешная отмена заказа",
+            "content": {
+              "aplication/json": {}
+            }
+          },
+          "default": {
+            "description": "Всё остальное",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Создание user",
+        "tags": [
+          "user"
+        ],
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "Created user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User успешно создан",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Всё остальное",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/addUsersList": {
+      "post": {
+        "summary": "Добавление user в список",
+        "tags": [
+          "user"
+        ],
+        "operationId": "addUser",
+        "requestBody": {
+          "description": "User add list",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Users"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User успешно добавлен в список",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Всё остальное",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "get": {
+        "summary": "Регистрация user в системе",
+        "tags": [
+          "user"
+        ],
+        "description": "",
+        "operationId": "registrationUser",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The user name for login",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hash",
+            "in": "query",
+            "description": "The hash for login and password",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешная регистрация в системе",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          },
+          "default": {
+            "description": "Всё остальное",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "summary": "Выход из смстемы",
+        "tags": [
+          "user"
+        ],
+        "description": "вышли из системы",
+        "operationId": "logoutUser",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/user/{name}": {
+      "delete": {
+        "summary": "Удаление user",
+        "tags": [
+          "user"
+        ],
+        "description": "Delete user",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "Имя user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User успешно удалён",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "403": {
+            "description": "User не авторизован"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Ошибка сервера, сервер не отвечает"
+          },
+          "503": {
+            "description": "Сервер не может обработать запрос в данный момент"
+          },
+          "511": {
+            "description": "Пройдите аутентификацию"
+          },
+          "default": {
+            "description": "Всё остальное",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Cloud": {
+        "type": "object",
+        "properties": {
+          "cloud_id": {
+            "type": "integer",
+            "example": 1123
+          },
+          "ram": {
+            "type": "integer",
+            "example": 16
+          },
+          "cpu": {
+            "type": "integer",
+            "example": 2
+          },
+          "ssd": {
+            "type": "integer"
+          },
+          "os": {
+            "type": "string",
+            "example": "linux"
+          }
+        }
+      },
+      "Clouds": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Cloud"
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code_error": {
+            "type": "integer",
+            "example": 28
+          },
+          "code_message": {
+            "type": "string",
+            "example": "error"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 24
+          },
+          "name": {
+            "type": "string",
+            "example": "thisUser"
+          },
+          "hash": {
+            "type": "string",
+            "example": "sda13243454"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          }
+        }
+      },
+      "Users": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
+      }
+    }
+  }
+}
